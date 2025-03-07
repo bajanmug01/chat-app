@@ -48,56 +48,12 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-
-// Mock data for chat contacts
-type ChatContact = {
-  id: string;
-  name: string;
-  unreadCount: number;
-  lastMessageTime: string;
-  avatar?: string;
-};
-
-const data: ChatContact[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    unreadCount: 3,
-    lastMessageTime: "2023-03-07T10:30:00",
-    avatar: "https://i.pravatar.cc/150?u=1",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    unreadCount: 0,
-    lastMessageTime: "2023-03-06T15:45:00",
-    avatar: "https://i.pravatar.cc/150?u=2",
-  },
-  {
-    id: "3",
-    name: "Mike Johnson",
-    unreadCount: 5,
-    lastMessageTime: "2023-03-07T09:15:00",
-    avatar: "https://i.pravatar.cc/150?u=3",
-  },
-  {
-    id: "4",
-    name: "Sarah Williams",
-    unreadCount: 1,
-    lastMessageTime: "2023-03-05T18:20:00",
-    avatar: "https://i.pravatar.cc/150?u=4",
-  },
-  {
-    id: "5",
-    name: "David Brown",
-    unreadCount: 0,
-    lastMessageTime: "2023-03-04T11:10:00",
-    avatar: "https://i.pravatar.cc/150?u=5",
-  },
-];
+import { useXMPP } from "../../contexts/XMPPContext";
+import { XMPPContact } from "LA/lib/mockProsody";
 
 export default function ChatPage() {
   const router = useRouter();
+  const { contacts } = useXMPP();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -130,7 +86,7 @@ export default function ChatPage() {
     }
   };
 
-  const columns: ColumnDef<ChatContact>[] = [
+  const columns: ColumnDef<XMPPContact>[] = [
     {
       accessorKey: "name",
       header: "Contact",
@@ -142,7 +98,10 @@ export default function ChatPage() {
             fallback={String(row.getValue("name"))}
             size="sm"
           />
-          <div className="font-medium">{row.getValue("name")}</div>
+          <div className="flex flex-col">
+            <div className="font-medium">{row.getValue("name")}</div>
+            <div className="text-xs text-gray-500">{row.original.jid}</div>
+          </div>
         </div>
       ),
     },
@@ -200,10 +159,26 @@ export default function ChatPage() {
         );
       },
     },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status");
+        return (
+          <div className="flex justify-center">
+            <div className={`h-3 w-3 rounded-full ${
+              status === 'online' ? 'bg-green-500' : 
+              status === 'away' ? 'bg-yellow-500' : 
+              'bg-gray-300'
+            }`} />
+          </div>
+        );
+      },
+    },
   ];
 
   const table = useReactTable({
-    data,
+    data: contacts,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -335,7 +310,7 @@ export default function ChatPage() {
         <CommandList>
           <CommandEmpty>No contacts found.</CommandEmpty>
           <CommandGroup heading="Contacts">
-            {data.map((contact) => (
+            {contacts.map((contact) => (
               <CommandItem
                 key={contact.id}
                 onSelect={() => handleContactSelect(contact.id)}

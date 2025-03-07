@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { AuthProvider } from "../contexts/AuthContext";
 import { TRPCReactProvider } from "LA/trpc/react";
+import { XMPPProvider } from "../contexts/XMPPContext";
 
 export const metadata: Metadata = {
   title: "Chat App",
@@ -18,7 +19,11 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <AuthProvider>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            <XMPPProvider>
+              {children}
+            </XMPPProvider>
+          </TRPCReactProvider>
         </AuthProvider>
       </body>
     </html>

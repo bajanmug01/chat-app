@@ -1,29 +1,55 @@
-# Create T3 App
+# E2E Encrypted Chat Application with Prosody XMPP
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a secure chat application that uses Prosody XMPP server for end-to-end encrypted messaging. The application is built with Next.js and React, and uses a mock Prosody server for development and demonstration purposes.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- End-to-end encryption for all messages
+- Real-time messaging with XMPP protocol
+- Contact list with online status indicators
+- Message read receipts
+- Responsive UI for desktop and mobile
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Technology Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- **Frontend**: Next.js, React, TypeScript, TailwindCSS
+- **Messaging Protocol**: XMPP (Extensible Messaging and Presence Protocol)
+- **XMPP Server**: Prosody (mocked for development)
+- **Encryption**: End-to-end encryption using public/private key pairs
 
-## Learn More
+## Mock Prosody Implementation
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+For development and demonstration purposes, this application includes a mock implementation of a Prosody XMPP server. In a production environment, you would replace this with a real Prosody server.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+The mock implementation includes:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- Simulated XMPP connections
+- Contact presence (online, offline, away)
+- End-to-end encryption simulation
+- Message delivery and read receipts
 
-## How do I deploy this?
+## Getting Started
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone the repository
+2. Install dependencies:
+   ```
+   pnpm install
+   ```
+3. Run the development server:
+   ```
+   pnpm dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Production Deployment
+
+For a production deployment, you would need to:
+
+1. Set up a real Prosody XMPP server
+2. Configure the server for TLS and SASL authentication
+3. Implement proper end-to-end encryption using OMEMO or similar
+4. Replace the mock implementation with real XMPP client libraries
+
+## License
+
+MIT
