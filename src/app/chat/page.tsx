@@ -16,23 +16,20 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus, Search, UserPlus } from "lucide-react";
+import { ArrowUpDown, Plus, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Avatar from "../../components/Avatar";
 
 import Header from "../../components/Header";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { Button } from "../../components/ui/button";
-import { Checkbox } from "../../components/ui/checkbox";
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "../../components/ui/command";
 import {
   Dialog,
@@ -41,17 +38,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../../components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
 import { Input } from "../../components/ui/input";
 import {
   Table,
