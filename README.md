@@ -1,6 +1,6 @@
 # E2E Encrypted Chat Application with Prosody XMPP
 
-This is a secure chat application that uses Prosody XMPP server for end-to-end encrypted messaging. The application is built with Next.js and React, and uses a mock Prosody server for development and demonstration purposes.
+This is a secure chat application that uses Prosody XMPP server for end-to-end encrypted messaging. The application is built with Next.js and React, and includes both a mock implementation for development and a real XMPP.js client for production use.
 
 ## Features
 
@@ -14,18 +14,29 @@ This is a secure chat application that uses Prosody XMPP server for end-to-end e
 
 - **Frontend**: Next.js, React, TypeScript, TailwindCSS
 - **Messaging Protocol**: XMPP (Extensible Messaging and Presence Protocol)
-- **XMPP Server**: Prosody (mocked for development)
+- **XMPP Server**: Prosody (mocked for development, real connection for production)
+- **XMPP Client Library**: XMPP.js
 - **Encryption**: End-to-end encryption using public/private key pairs
 
-## Mock Prosody Implementation
+## Implementation Details
 
-For development and demonstration purposes, this application includes a mock implementation of a Prosody XMPP server. In a production environment, you would replace this with a real Prosody server.
+### Mock Prosody Server
 
-The mock implementation includes:
+For development and testing purposes, this application includes a mock implementation of a Prosody XMPP server. The mock server simulates:
 
-- Simulated XMPP connections
+- XMPP connections
 - Contact presence (online, offline, away)
-- End-to-end encryption simulation
+- End-to-end encryption
+- Message delivery and read receipts
+
+### Real XMPP Client
+
+For production use, the application includes a real XMPP.js client implementation that can connect to an actual Prosody server. The real client supports:
+
+- Connection to any XMPP server
+- Roster (contact list) management
+- Presence updates
+- End-to-end encrypted messaging
 - Message delivery and read receipts
 
 ## Getting Started
@@ -47,8 +58,17 @@ For a production deployment, you would need to:
 
 1. Set up a real Prosody XMPP server
 2. Configure the server for TLS and SASL authentication
-3. Implement proper end-to-end encryption using OMEMO or similar
-4. Replace the mock implementation with real XMPP client libraries
+3. Update the XMPP client configuration in `src/lib/xmppClient.ts` to point to your server
+4. Set `useMock = false` in the XMPPClient class to use the real XMPP connection
+
+## Switching Between Mock and Real Implementation
+
+The application includes both implementations and allows you to switch between them:
+
+- The mock implementation is available through `useXMPP` hook from `src/contexts/XMPPContext.tsx`
+- The real implementation is available through `useXMPPReal` hook from `src/contexts/XMPPRealContext.tsx`
+
+To use the real implementation in a component, simply import and use the `useXMPPReal` hook instead of `useXMPP`.
 
 ## License
 

@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 import { AuthProvider } from "../contexts/AuthContext";
 import { TRPCReactProvider } from "LA/trpc/react";
 import { XMPPProvider } from "../contexts/XMPPContext";
+import { XMPPRealProvider } from "../contexts/XMPPRealContext";
 
 export const metadata: Metadata = {
   title: "Chat App",
@@ -21,7 +22,9 @@ export default function RootLayout({
         <AuthProvider>
           <TRPCReactProvider>
             <XMPPProvider>
-              {children}
+              <XMPPRealProvider>
+                {children}
+              </XMPPRealProvider>
             </XMPPProvider>
           </TRPCReactProvider>
         </AuthProvider>

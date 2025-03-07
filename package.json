@@ -37,6 +37,11 @@
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
     "@types/uuid": "^10.0.0",
+    "@xmpp/client": "^0.13.4",
+    "@xmpp/debug": "^0.13.3",
+    "@xmpp/id": "^0.13.2",
+    "@xmpp/jid": "^0.13.2",
+    "@xmpp/xml": "^0.13.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
@@ -51,6 +56,7 @@
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
+    "xmpp": "^0.0.8",
     "zod": "^3.23.3"
   },
   "devDependencies": {
