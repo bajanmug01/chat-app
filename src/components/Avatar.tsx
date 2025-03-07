@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface AvatarProps {
   src?: string;
@@ -22,10 +23,12 @@ export default function Avatar({ src, alt, fallback, size = 'md' }: AvatarProps)
   return (
     <div className={`relative flex shrink-0 overflow-hidden rounded-full bg-gray-200 ${sizeClasses[size]}`}>
       {src && !error ? (
-        <img 
+        <Image 
           src={src} 
           alt={alt} 
-          className="h-full w-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover"
           onError={() => setError(true)}
         />
       ) : (

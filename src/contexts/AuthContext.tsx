@@ -68,9 +68,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
+      // Explicitly set user to null to ensure UI updates immediately
+      setUser(null);
+      // Force a router refresh to ensure protected routes redirect
+      router.refresh();
       router.push('/signin');
     } catch (error) {
       console.error('Error signing out:', error);
+      throw error; // Re-throw to allow handling in components
     }
   };
 

@@ -2,10 +2,8 @@
 
 import Header from '../../components/Header';
 import ProtectedRoute from '../../components/ProtectedRoute';
-import { useAuth } from '../../contexts/AuthContext';
 
 export default function ChatPage() {
-  //const { user } = useAuth();
 
   return (
     <ProtectedRoute>
