@@ -4,22 +4,25 @@ import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
 import Avatar from './Avatar';
 
 interface HeaderProps {
-  user: User;
+  user?: User; // Make user optional since we'll get it from context if not provided
 }
 
-export default function Header({ user }: HeaderProps) {
+export default function Header({ user: propUser }: HeaderProps) {
+  const { user: contextUser, signOut } = useAuth();
+  const user = propUser ?? contextUser; // Use prop user if provided, otherwise use from context
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
+  // If no user is available, don't render the header
+  if (!user) return null;
+  
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/');
-    router.refresh();
+    await signOut();
   };
 
   // Get user display name (use full name, then first+last, then email)
