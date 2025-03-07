@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import { User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 import Header from "../components/Header";
 
 export default function Home() {
@@ -44,11 +44,6 @@ export default function Home() {
 
     void checkUser();
   }, [router]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-  };
 
   return (
     <>

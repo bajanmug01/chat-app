@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 import Header from '../../components/Header';
 import { useRouter } from 'next/navigation';
 

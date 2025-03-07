@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 import Header from '../../components/Header';
 import { useRouter } from 'next/navigation';
 import Avatar from '../../components/Avatar';
@@ -55,14 +55,23 @@ export default function ProfilePage() {
     return null; // Will redirect in the useEffect
   }
 
-  // Get user display name (use email if no name is available)
-  const displayName = (user.user_metadata?.name as string) ?? user.email ?? '';
+  // Get user metadata
+  const fullName = user.user_metadata?.full_name as string;
+  const firstName = user.user_metadata?.first_name as string;
+  const lastName = user.user_metadata?.last_name as string;
+  
+  // Get user display name
+  const displayName = fullName ?? 
+    (firstName && lastName ? `${firstName} ${lastName}` : 
+    (firstName ?? lastName ?? user.email ?? ''));
   
   // Get user avatar URL
   const avatarUrl = user.user_metadata?.avatar_url as string;
   
   // Get initials for avatar fallback
-  const initials = displayName ? displayName.substring(0, 2) : 'U';
+  const initials = firstName && lastName 
+    ? `${firstName[0]}${lastName[0]}`
+    : displayName.substring(0, 2);
 
   return (
     <>
@@ -86,13 +95,23 @@ export default function ProfilePage() {
             <div className="flex-1">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Name</label>
-                  <p className="mt-1 text-gray-900">{displayName}</p>
+                  <label className="block text-sm font-medium text-gray-700">First Name</label>
+                  <p className="mt-1 text-gray-900">{firstName || 'Not set'}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                  <p className="mt-1 text-gray-900">{lastName || 'Not set'}</p>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Email</label>
                   <p className="mt-1 text-gray-900">{user.email}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  <p className="mt-1 text-gray-900">{fullName || 'Not set'}</p>
                 </div>
                 
                 <div className="sm:col-span-2">

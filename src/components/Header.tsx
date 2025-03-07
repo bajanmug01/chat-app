@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -21,14 +21,22 @@ export default function Header({ user }: HeaderProps) {
     router.refresh();
   };
 
-  // Get user display name (use email if no name is available)
-  const displayName = (user.user_metadata?.name as string) ?? user.email ?? '';
+  // Get user display name (use full name, then first+last, then email)
+  const fullName = user.user_metadata?.full_name as string;
+  const firstName = user.user_metadata?.first_name as string;
+  const lastName = user.user_metadata?.last_name as string;
+  
+  const displayName = fullName ?? 
+    (firstName && lastName ? `${firstName} ${lastName}` : 
+    (firstName ?? lastName ?? user.email ?? ''));
   
   // Get user avatar URL
   const avatarUrl = user.user_metadata?.avatar_url as string;
   
   // Get initials for avatar fallback
-  const initials = displayName ? displayName.substring(0, 2) : 'U';
+  const initials = firstName && lastName 
+    ? `${firstName[0]}${lastName[0]}`
+    : displayName.substring(0, 2);
 
   return (
     <header className="bg-white shadow-md">
